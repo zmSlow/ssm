@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.ssm.mapper.UserMapper">
+
+    <select id="queryUserById" resultType="User">
+        select * from tb_user where id = #{id}
+    </select>
+
+    <select id="queryUsersByPage" resultType="User">
+        select * from tb_user limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryUserAll" resultType="User">
+        SELECT * from tb_user
+    </select>
+
+    <insert id="addUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO ssm.tb_user (
+            user_name,
+            password,
+            name,
+            age,
+            sex,
+            birthday,
+            created,
+            updated
+        )
+        VALUES
+            (
+                #{userName},
+                #{password},
+                #{name},
+                #{age},
+                #{sex},
+                #{birthday},
+                now(),
+                now()
+            );
+    </insert>
+
+    <delete id="deleteUser" >
+        DELETE from  tb_user where ID IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE tb_user
+        SET
+         user_name = #{userName},
+         password = #{password},
+         name = #{name},
+         age = #{age},
+         sex = #{sex},
+         birthday = #{birthday},
+         updated = NOW()
+        WHERE
+            (id = #{id});
+    </update>
+
+</mapper>
