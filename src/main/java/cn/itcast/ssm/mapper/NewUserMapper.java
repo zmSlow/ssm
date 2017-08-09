@@ -8,4 +8,5 @@ import com.github.abel533.mapper.Mapper;
  */
 public interface NewUserMapper extends Mapper<User> {
 
+
 }
