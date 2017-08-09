@@ -6,7 +6,7 @@
 	    <table cellpadding="5">
 	        <tr>
 	            <td>用户名:</td>
-				<input type="hidden" name="id"/>
+				<input type="hidden" name="id" id="id"/>
 	            <td><input class="easyui-textbox" type="text" name="userName" data-options="required:true" style="width: 280px;"></input></td>
 	        </tr>
 	        <tr>
@@ -48,16 +48,34 @@
 			$.messager.alert('提示','表单还未填写完成!');
 			return ;
 		}
-		$.post("/user/save",$("#content").serialize(), function(data){
-			if(data.status == 200){
-				$.messager.alert('提示','新增会员成功!');
-				$('#userAdd').window('close');
-				$("#userList").datagrid("reload");
-				clearForm();
-			}else{
-				$.messager.alert('提示','新增会员失败!');
-			}
-		});
+
+		if (!$("#id").val()){
+			$.post("/rest/user",$("#content").serialize(), function(data,text,xhr){
+				if(xhr.status == 201){
+					$.messager.alert('提示','新增会员成功!');
+					$('#userAdd').window('close');
+					$("#userList").datagrid("reload");
+					clearForm();
+				}else{
+					$.messager.alert('提示','新增会员失败!');
+				}
+			});
+		}else{
+			$.ajax({url:"/rest/user",
+				type: "PUT",
+				data:$("#content").serialize(),
+				success:function(data,text,xhr) {
+					if (xhr.status == 204) {
+						$.messager.alert('提示', '修改会员成功!');
+						$('#userAdd').window('close');
+						$("#userList").datagrid("reload");
+						clearForm();
+					} else {
+						$.messager.alert('提示', '修改会员失败!');
+					}
+				}
+			});
+		}
 	}
 	function clearForm(){
 		$('#content').form('reset');

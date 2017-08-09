@@ -99,8 +99,8 @@
             }
             $.messager.confirm('确认', '确定删除ID为 ' + ids + ' 的会员吗？', function (r) {
                 if (r) {
-                    $.post("/user/delete", {'ids': ids}, function (data) {
-                        if (data.status == 200) {
+                    $.post("/rest/user", {'ids': ids,'_method':'DELETE'}, function(data, text, xhr){
+                        if(xhr.status == 204){
                             $.messager.alert('提示', '删除会员成功!', undefined, function () {
                                 $("#userList").datagrid("reload");
                             });

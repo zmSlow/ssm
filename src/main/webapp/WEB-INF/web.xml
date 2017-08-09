@@ -43,9 +43,9 @@
     </filter-mapping>
 
     <!--
-        将POST请求转化为DELETE或者是PUT
-        要用_method指定真正的请求参数
-     -->
+    将POST请求转化为DELETE或者是PUT
+    要用_method指定真正的请求参数
+    -->
     <filter>
         <filter-name>HiddenHttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
